@@ -35,12 +35,6 @@
     "import/named": "off",
     "import/namespace": "off",
     "import/no-unresolved": "off",
-    "import/no-named-as-default": "off",
-    "scss/at-rule-no-unknown": [
-      true,
-      {
-        "ignoreAtRules": ["tailwind"]
-      }
-    ]
+    "import/no-named-as-default": "off"
   }
 }
