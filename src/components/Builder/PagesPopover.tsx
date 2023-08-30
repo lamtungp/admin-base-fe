@@ -54,7 +54,7 @@ const PagesPopover = ({ open }: PagesPopoverProps) => {
                 </span>
               </li>
             </ul>
-            <div className="flex mb-3 -space-x-3">
+            {/* <div className="flex mb-3 -space-x-3">
               <img
                 className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
                 src="/docs/images/people/profile-picture-5.jpg"
@@ -76,7 +76,7 @@ const PagesPopover = ({ open }: PagesPopoverProps) => {
               >
                 +3
               </a>
-            </div>
+            </div> */}
             <div className="flex">
               <button
                 type="button"

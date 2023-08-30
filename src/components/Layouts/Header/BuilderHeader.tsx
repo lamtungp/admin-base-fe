@@ -1,66 +1,66 @@
+'use client';
+
 import { Bars3Icon } from '@heroicons/react/20/solid';
 import { BellIcon } from '@heroicons/react/24/outline';
+import { usePathname } from 'next/navigation';
 
 const BuilderHeader = () => {
+  const pathname = usePathname();
+
   return (
-    <nav className="bg-gray-800 w-full fixed">
-      <div className="">
-        <div className="relative flex h-12 items-center justify-between">
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            <button
-              type="button"
-              className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none"
-              aria-controls="mobile-menu"
-              aria-expanded="false"
-            >
-              <span className="absolute -inset-0.5"></span>
-              <span className="sr-only">Open main menu</span>
-
-              <Bars3Icon className="h-6 w-6 text-white" />
-            </button>
+    pathname !== '/builder' && (
+      <nav className="bg-gray-800 w-full fixed z-50">
+        <div className="absolute top-[25%] left-[50%]">
+          <div className="flex justify-center items-center text-white text-sm">
+            <p>Customer</p>
           </div>
-          <div className="flex justify-center p-2">
-            <button className="flex w-full h-full">
-              <img
-                className="w-10 h-10 rounded"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt="Default avatar"
-              />
-            </button>
-          </div>
+        </div>
 
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="hidden sm:ml-6 sm:block">
-              <div className="flex space-x-1">
-                <a
-                  href="#"
-                  className="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-sm font-medium"
-                  aria-current="page"
-                >
-                  Dashboard
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-sm font-medium"
-                >
-                  Team
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-sm font-medium"
-                >
-                  Projects
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-sm font-medium"
-                >
-                  Calendar
-                </a>
+        <div className="flex justify-between">
+          <div className="flex h-12 items-center">
+            <div className="flex h-full justify-center p-2">
+              <button className="flex h-full">
+                <img
+                  className="h-full rounded"
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  alt="Default avatar"
+                />
+              </button>
+              <div className="flex items-center justify-center h-full sm:items-stretch sm:justify-start">
+                <div className="hidden sm:ml-6 sm:block">
+                  <div className="flex space-x-1">
+                    <a
+                      href="#"
+                      className="text-gray-300 h-full px-3 py-1.5 hover:bg-gray-700 rounded-md text-sm font-medium"
+                      aria-current="page"
+                    >
+                      Dashboard
+                    </a>
+                    <a
+                      href="#"
+                      className="text-gray-300 h-full px-3 py-1.5 hover:bg-gray-700 rounded-md text-sm font-medium"
+                    >
+                      Team
+                    </a>
+                    <a
+                      href="#"
+                      className="text-gray-300 h-full px-3 py-1.5 hover:bg-gray-700 rounded-md text-sm font-medium"
+                    >
+                      Projects
+                    </a>
+                    <a
+                      href="#"
+                      className="text-gray-300 h-full px-3 py-1.5 hover:bg-gray-700 rounded-md text-sm font-medium"
+                    >
+                      Calendar
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:mx-6 sm:pr-0">
+
+          <div className="flex items-center pr-2 sm:static sm:inset-auto sm:mx-6 sm:pr-0">
             <button
               type="button"
               className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none"
@@ -127,38 +127,8 @@ const BuilderHeader = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="sm:hidden" id="mobile-menu">
-        <div className="space-y-1 px-2 pb-3 pt-2">
-          <a
-            href="#"
-            className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-            aria-current="page"
-          >
-            Dashboard
-          </a>
-          <a
-            href="#"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          >
-            Team
-          </a>
-          <a
-            href="#"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          >
-            Projects
-          </a>
-          <a
-            href="#"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          >
-            Calendar
-          </a>
-        </div>
-      </div>
-    </nav>
+      </nav>
+    )
   );
 };
 

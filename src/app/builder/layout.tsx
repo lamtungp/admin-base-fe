@@ -23,7 +23,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <BuilderHeader />
       <BuilderSidebar />
-      <main className={firaSans.className}>{children}</main>
+      <main className={`${firaSans.className} pt-[48px] pl-[52px] h-full`}>
+        {children}
+      </main>
     </>
   );
 }
