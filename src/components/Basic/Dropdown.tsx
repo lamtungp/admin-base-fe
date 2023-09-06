@@ -1,13 +1,14 @@
 import './index.scss';
 
-interface TooltipProps
+interface DropdownProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   children?: React.ReactNode;
   title?: string;
   position?: string;
+  open?: boolean;
 }
 
-const Tooltip = ({ children, title, position = '', className, onClick }: TooltipProps) => {
+const Dropdown = ({ children, title, position = '', className, onClick, open }: DropdownProps) => {
   const getPositionStyles = (position?: string) => {
     switch (position) {
       case 'bottom':
@@ -19,11 +20,11 @@ const Tooltip = ({ children, title, position = '', className, onClick }: Tooltip
   };
 
   return (
-    <div className={`tooltip ${className}`} onClick={onClick}>
+    <div className={`dropdown ${className}`} onClick={onClick}>
       {children}
-      <div className={`${getPositionStyles(position)} tooltip-text`}>{title}</div>
+      {open && <div className={`${getPositionStyles(position)} dropdown-content`}>{title}</div>}
     </div>
   );
 };
 
-export default Tooltip;
+export default Dropdown;

@@ -1,18 +1,65 @@
 'use client';
 
-import { Bars3Icon } from '@heroicons/react/20/solid';
-import { BellIcon } from '@heroicons/react/24/outline';
+import {
+  BellIcon,
+  CheckIcon,
+  EllipsisHorizontalIcon,
+  PencilIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 const BuilderHeader = () => {
   const pathname = usePathname();
+  const [openEditPageName, setOpenEditPageName] = useState(false);
 
   return (
     pathname !== '/builder' && (
       <nav className="bg-gray-800 w-full fixed z-20">
-        <div className="absolute top-[25%] left-[50%]">
+        <div className="absolute top-[16%] left-[50%] translate-x-[-50%]">
           <div className="flex justify-center items-center text-white text-sm">
-            <p>Customer</p>
+            {!openEditPageName && (
+              <>
+                <button
+                  onClick={() => setOpenEditPageName(true)}
+                  className="hover:bg-gray-700 rounded-md mr-2 px-2 py-1.5 flex justify-center items-center"
+                >
+                  <p className="mr-2">Customer</p>
+                  <PencilIcon className="w-3" />
+                </button>
+                <button
+                  className="flex-shrink-0 border-transparent p-[2px] mr-2 text-white bg-gray-600  hover:bg-gray-500 rounded"
+                  type="button"
+                  onClick={() => setOpenEditPageName(false)}
+                >
+                  <EllipsisHorizontalIcon className="w-4" />
+                </button>
+              </>
+            )}
+
+            {openEditPageName && (
+              <div className="flex items-center py-1.5 px-3 bg-gray-700 rounded-md">
+                <input
+                  className="appearance-none block w-full bg-transparent focus:outline-none text-xs"
+                  type="text"
+                />
+                <button
+                  className="flex-shrink-0 border-transparent p-[2px] mr-2 text-white bg-gray-600  hover:bg-gray-500 rounded"
+                  type="button"
+                  onClick={() => setOpenEditPageName(false)}
+                >
+                  <XMarkIcon className="w-4" />
+                </button>
+                <button
+                  className="flex-shrink-0 bg-blue-400 p-[2px] hover:bg-blue-500 text-white rounded"
+                  type="button"
+                  onClick={() => setOpenEditPageName(false)}
+                >
+                  <CheckIcon className="w-4" />
+                </button>
+              </div>
+            )}
           </div>
         </div>
 

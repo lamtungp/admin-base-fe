@@ -27,27 +27,6 @@ const tableData = {
       'day of birth': 'Pham Tung Lam',
       state: '',
     },
-    // {
-    //   username: 'Pham Tung Lam',
-    //   email: 'Pham Tung Lam',
-    //   phone: 'Pham Tung Lam',
-    //   'day of birth': 'Pham Tung Lam',
-    //   state: 'Pham Tung Lam',
-    // },
-    // {
-    //   username: 'Pham Tung Lam',
-    //   email: 'Pham Tung Lam',
-    //   phone: 'Pham Tung Lam',
-    //   'day of birth': 'Pham Tung Lam',
-    //   state: 'Pham Tung Lam',
-    // },
-    // {
-    //   username: 'Pham Tung Lam',
-    //   email: 'Pham Tung Lam',
-    //   phone: 'Pham Tung Lam',
-    //   'day of birth': 'Pham Tung Lam',
-    //   state: 'Pham Tung Lam',
-    // },
   ],
   pageSize: 1,
   totalRows: 5,
@@ -102,19 +81,21 @@ export default function BuilderPage() {
     setTextSearch(e.target.value);
   }, 120);
 
-  // a little function to help us with reordering the result
+  /**
+   * A little function to help us with reordering the result
+   */
   const reorder = (list: any[], startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
-
     return result;
   };
+
   /**
    * Moves an item from one list to another list.
    */
   const copy = (
-    source: any,
+    source: Component[],
     destination: any[],
     droppableSource: any,
     droppableDestination: any,
@@ -127,18 +108,23 @@ export default function BuilderPage() {
     return destClone;
   };
 
-  const move = (source: any, destination: any, droppableSource: any, droppableDestination: any) => {
+  const handleDuplicate = (source: Component[], index: number) => {
     const sourceClone = Array.from(source);
-    const destClone = Array.from(destination);
-    const [removed] = sourceClone.splice(droppableSource.index, 1);
-
-    destClone.splice(droppableDestination.index, 0, removed);
-
-    const result = {} as any;
-    result[droppableSource.droppableId] = sourceClone;
-    result[droppableDestination.droppableId] = destClone;
-
+    const newComponent = { ...sourceClone[index], id: uuid() };
+    const result = [...sourceClone.slice(0, index), newComponent, ...sourceClone.slice(index)];
     return result;
+  };
+
+  const handleDelete = (source: Component[], droppableSourceId: string) => {
+    const sourceClone = Array.from(source);
+    const result = sourceClone.filter((component: Component) => component.id !== droppableSourceId);
+    return result;
+  };
+
+  const getDndDom = (dndId: string, attribute = 'data-rbd-drag-handle-draggable-id') => {
+    const domQuery = `[${attribute}='${dndId}']`;
+    const draggedDOM = document.querySelector(domQuery);
+    return draggedDOM;
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -154,21 +140,7 @@ export default function BuilderPage() {
       setComponents(reorder(components, source.index, destination.index));
     } else if (source.droppableId.includes('component')) {
       setComponents(copy(ITEMS, components, source, destination));
-    } else {
-      // setComponents(
-      //   move(
-      //     components[source.droppableId],
-      //     components[destination.droppableId],
-      //     source,
-      //     destination,
-      //   ),
-      // );
     }
-  };
-  const getDndDom = (dndId: string, attribute = 'data-rbd-drag-handle-draggable-id') => {
-    const domQuery = `[${attribute}='${dndId}']`;
-    const draggedDOM = document.querySelector(domQuery);
-    return draggedDOM;
   };
 
   const onDragUpdate = (event: DragUpdate) => {
@@ -257,7 +229,8 @@ export default function BuilderPage() {
           <MainBuilder
             components={components}
             setComponents={setComponents}
-            onDelete={move}
+            onDelete={handleDelete}
+            onDuplicate={handleDuplicate}
             placeholderProps={placeholderProps}
           />
         </div>

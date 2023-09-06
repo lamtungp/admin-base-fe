@@ -26,6 +26,7 @@ interface MainBuilderProps {
   placeholderProps: any;
   setComponents: any;
   onDelete: any;
+  onDuplicate: any;
 }
 
 const MainBuilder = ({
@@ -33,6 +34,7 @@ const MainBuilder = ({
   setComponents,
   placeholderProps,
   onDelete,
+  onDuplicate,
 }: MainBuilderProps) => {
   const ref = useRef(null);
   const [dragComponentId, setDragComponentId] = useState<string | null>(null);
@@ -91,29 +93,37 @@ const MainBuilder = ({
                       <div
                         className={`${
                           !isDraggableDisable
-                            ? 'invisible group-hover/edit:visible'
+                            ? 'invisible'
                             : item.id === dragComponentId || item.id === componentMouseOverId
                             ? 'visible'
                             : 'invisible'
-                        } absolute top-[-34px] pb-1`}
+                        } group-hover/edit:visible absolute top-[-34px] pb-1`}
                       >
                         <div
                           className={`rounded-md bg-blue-400 flex justify-center align-middle px-2 gap-2`}
                         >
-                          <div className="border-r border-gray-300 flex justify-center items-center text-white py-[3px]">
+                          <div className="border-r border-gray-300 cursor-all-scroll flex justify-center items-center text-white py-[3px]">
                             <img src="/images/drag-dots.svg" className="w-6" />
                             <span className="text-[14px] capitalize mr-2 flex justify-center align-middle">
                               {item.name}
                             </span>
                           </div>
 
-                          <Tooltip title="Customize">
+                          <Tooltip title="Customize" className="cursor-pointer">
                             <CogIcon className="text-gray-200 hover:text-gray-50 w-5" />
                           </Tooltip>
-                          <Tooltip title="Duplicate">
+                          <Tooltip
+                            title="Duplicate"
+                            className="cursor-pointer"
+                            onClick={() => setComponents(onDuplicate(components, index))}
+                          >
                             <DocumentDuplicateIcon className="text-gray-200 hover:text-gray-50 w-4" />
                           </Tooltip>
-                          <Tooltip title="Delete" onClick={onDelete}>
+                          <Tooltip
+                            title="Delete"
+                            className="cursor-pointer"
+                            onClick={() => setComponents(onDelete(components, item.id))}
+                          >
                             <TrashIcon className="text-gray-200 hover:text-gray-50 w-4" />
                           </Tooltip>
                         </div>
