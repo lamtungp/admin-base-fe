@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import _ from 'lodash';
 import Tooltip from '../Basic/Tooltip';
+import { CogIcon, DocumentDuplicateIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 const Droppable = dynamic(() => import('react-beautiful-dnd').then((mod) => mod.Droppable), {
   ssr: false,
@@ -15,6 +16,7 @@ const Draggable = dynamic(() => import('react-beautiful-dnd').then((mod) => mod.
 
 type Component = {
   id: string;
+  name: string;
   icon: any;
   content: any;
 };
@@ -22,9 +24,16 @@ type Component = {
 interface MainBuilderProps {
   components: Component[];
   placeholderProps: any;
+  setComponents: any;
+  onDelete: any;
 }
 
-const MainBuilder = ({ components, placeholderProps }: MainBuilderProps) => {
+const MainBuilder = ({
+  components,
+  setComponents,
+  placeholderProps,
+  onDelete,
+}: MainBuilderProps) => {
   const ref = useRef(null);
   const [dragComponentId, setDragComponentId] = useState<string | null>(null);
   const [componentMouseOverId, setComponentMouseOverId] = useState<string | null>(null);
@@ -60,7 +69,7 @@ const MainBuilder = ({ components, placeholderProps }: MainBuilderProps) => {
             ref={providedDrop.innerRef}
             {...providedDrop.droppableProps}
             style={{ minHeight: `calc(100% - 24px)` }}
-            className={`relative mt-6 rounded-md`}
+            className={`relative mt-8 rounded-md`}
           >
             {components.map((item, index) => (
               <Draggable
@@ -86,13 +95,36 @@ const MainBuilder = ({ components, placeholderProps }: MainBuilderProps) => {
                             : item.id === dragComponentId || item.id === componentMouseOverId
                             ? 'visible'
                             : 'invisible'
-                        } absolute top-[-24px]`}
+                        } absolute top-[-34px] pb-1`}
                       >
-                        <Tooltip title="abc">fdsfds</Tooltip>
+                        <div
+                          className={`rounded-md bg-blue-400 flex justify-center align-middle px-2 gap-2`}
+                        >
+                          <div className="border-r border-gray-300 flex justify-center items-center text-white py-[3px]">
+                            <img src="/images/drag-dots.svg" className="w-6" />
+                            <span className="text-[14px] capitalize mr-2 flex justify-center align-middle">
+                              {item.name}
+                            </span>
+                          </div>
+
+                          <Tooltip title="Customize">
+                            <CogIcon className="text-gray-200 hover:text-gray-50 w-5" />
+                          </Tooltip>
+                          <Tooltip title="Duplicate">
+                            <DocumentDuplicateIcon className="text-gray-200 hover:text-gray-50 w-4" />
+                          </Tooltip>
+                          <Tooltip title="Delete" onClick={onDelete}>
+                            <TrashIcon className="text-gray-200 hover:text-gray-50 w-4" />
+                          </Tooltip>
+                        </div>
                       </div>
 
                       <div
-                        className="border border-transparent rounded-md hover:border hover:border-blue-400"
+                        className={`${
+                          item.id === dragComponentId && isDraggableDisable
+                            ? 'border-blue-400'
+                            : 'border-transparent'
+                        } border rounded-md hover:border hover:border-blue-400`}
                         onMouseLeave={() => setComponentMouseOverId(null)}
                         onMouseEnter={() => setComponentMouseOverId(item.id)}
                       >

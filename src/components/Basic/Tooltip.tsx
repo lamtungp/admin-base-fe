@@ -1,32 +1,27 @@
 import './index.scss';
 
-interface TooltipProps {
+interface TooltipProps
+  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   children?: React.ReactNode;
   title?: string;
   position?: string;
 }
 
-const Tooltip = ({ children, title, position = '' }: TooltipProps) => {
-  const getPositionStyles = (position: string) => {
+const Tooltip = ({ children, title, position = '', className }: TooltipProps) => {
+  const getPositionStyles = (position?: string) => {
     switch (position) {
       case 'bottom':
-        return 'top-[150%] left-[50%] ml-[60px] after:bottom-[100%] after:left-[50%]';
+        return 'top-[130%] left-[50%] translate-x-[-50%] after:bottom-[100%] after:left-[50%] after:ml-[-5px]';
 
       default:
-        return 'top-[150%] left-[50%] ml-[60px] after:bottom-[100%] after:left-[50%]';
+        return 'top-[130%] left-[50%] translate-x-[-50%] after:bottom-[100%] after:left-[50%] after:ml-[-5px]';
     }
   };
 
   return (
-    <div className="relative inline-block">
+    <div className={`tooltip ${className}`}>
       {children}
-      <span
-        className={`${getPositionStyles(
-          position,
-        )} tooltip-text hidden absolute w-[120px] bg-black text-white text-center rounded-md py-1 z-10`}
-      >
-        {title}
-      </span>
+      <div className={`${getPositionStyles(position)} tooltip-text`}>{title}</div>
     </div>
   );
 };

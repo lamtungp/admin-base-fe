@@ -58,31 +58,37 @@ const ITEMS = [
     id: uuid(),
     icon: <IconComponent title="Table" icon="/images/table.svg" />,
     content: <TableItem {...tableData} title="Users" />,
+    name: 'table',
   },
   {
     id: uuid(),
     icon: <IconComponent title="Form" icon="/images/form.svg" />,
     content: <TableItem />,
+    name: 'table',
   },
   {
     id: uuid(),
     icon: <IconComponent title="Container" icon="/images/container.svg" />,
     content: <TableItem />,
+    name: 'table',
   },
   {
     id: uuid(),
     icon: <IconComponent title="Table" icon="/images/Grid.svg" />,
     content: <TableItem />,
+    name: 'table',
   },
   {
     id: uuid(),
     icon: <IconComponent title="Table" icon="/images/Grid.svg" />,
     content: <TableItem />,
+    name: 'table',
   },
 ];
 
 type Component = {
   id: string;
+  name: string;
   icon: any;
   content: any;
 };
@@ -248,7 +254,12 @@ export default function BuilderPage() {
     <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart} onDragUpdate={onDragUpdate}>
       <div className="flex min-h-full bg-gray-800 z-10">
         <div className="rounded-tl-md w-[calc(100%-340px)] min-h-full bg-gray-200 p-4">
-          <MainBuilder components={components} placeholderProps={placeholderProps} />
+          <MainBuilder
+            components={components}
+            setComponents={setComponents}
+            onDelete={move}
+            placeholderProps={placeholderProps}
+          />
         </div>
         <div className="w-[340px] min-h-full bg-gray-100 px-3 py-4">
           <div className="text-black">
