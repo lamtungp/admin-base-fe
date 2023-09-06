@@ -24,7 +24,7 @@ const TableItem = ({
   return (
     <section className="bg-white py-4 px-5">
       <h1 className="mb-4 text-lg capitalize">{title}</h1>
-      <div className="overflow-x-auto border rounded-lg">
+      <div className="overflow-x-auto border rounded-lg mb-2">
         <table className="table-auto border-collapse w-full min-w-[600px]">
           <thead>
             <tr className="h-10 [&>th:first-child]:border-l-0 [&>th:last-child]:border-r-0 [&>th]:border-t-0">
@@ -56,7 +56,7 @@ const TableItem = ({
           <li>
             <a
               href="#"
-              className="flex items-center justify-center px-2 h-8 ml-0 mr-1 leading-tight text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-100 hover:text-gray-700 bg-transparent"
+              className="flex items-center justify-center px-2 h-8 ml-0 mr-1 leading-tight text-gray-500 bg-transparent border border-gray-300 rounded-md hover:bg-gray-100 hover:text-gray-700"
             >
               <ChevronLeftIcon className="w-3.5" />
             </a>
@@ -69,8 +69,8 @@ const TableItem = ({
                 className={`${
                   currentPage === index + 1
                     ? 'text-blue-600 bg-blue-50 border-blue-300 hover:bg-blue-100 hover:text-blue-700'
-                    : 'text-gray-500 bg-white border-gray-300 hover:bg-gray-100 hover:text-gray-700'
-                } flex items-center justify-center rounded-md mx-[0.5px] px-3 h-8 leading-tight cursor-pointer border bg-transparent`}
+                    : 'text-gray-500 bg-transparent border-gray-300 hover:bg-gray-100 hover:text-gray-700'
+                } flex items-center justify-center rounded-md mx-[0.5px] px-3 h-8 leading-tight cursor-pointer border`}
               >
                 {index + 1}
               </li>
@@ -80,13 +80,13 @@ const TableItem = ({
           <li>
             <a
               href="#"
-              className="flex items-center justify-center px-2 ml-1 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 bg-transparent"
+              className="flex items-center justify-center px-2 ml-1 h-8 leading-tight bg-transparent text-gray-500 border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700"
             >
               <ChevronRightIcon className="w-3.5" />
             </a>
           </li>
         </ul>
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center gap-2 px-2 rounded-md bg-transparent hover:bg-sky-50 cursor-pointer">
           <span className="text-[#9fa9ba] text-xs">{pageSize} items</span>
           <ChevronDownIcon className="w-4" />
         </div>

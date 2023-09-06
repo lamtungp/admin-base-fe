@@ -23,13 +23,17 @@ const BuilderItems = () => {
           <div className="grid grid-cols-3 gap-2">
             {list.items.map((item, index) => (
               <Droppable
-                droppableId={`component-${item.id}`}
-                key={`component-${item.id}`}
+                droppableId={`drop-component-${item.id}`}
+                key={`drop-component-${item.id}`}
                 isDropDisabled
               >
                 {(providedDrop, _snapshotDrop) => (
                   <div {...providedDrop.droppableProps} ref={providedDrop.innerRef}>
-                    <Draggable key={item.id} draggableId={item.id} index={index}>
+                    <Draggable
+                      key={`drag-component-${item.id}`}
+                      draggableId={`drag-component-${item.id}`}
+                      index={index}
+                    >
                       {(provided, snapshot) => (
                         <React.Fragment>
                           <div

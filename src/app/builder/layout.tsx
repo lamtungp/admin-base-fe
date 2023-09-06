@@ -1,4 +1,4 @@
-import './builder.scss';
+import './index.scss';
 import type { Metadata } from 'next';
 import { Fira_Sans } from 'next/font/google';
 

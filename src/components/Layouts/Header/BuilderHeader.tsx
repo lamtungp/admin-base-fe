@@ -9,7 +9,7 @@ const BuilderHeader = () => {
 
   return (
     pathname !== '/builder' && (
-      <nav className="bg-gray-800 w-full fixed z-50">
+      <nav className="bg-gray-800 w-full fixed z-20">
         <div className="absolute top-[25%] left-[50%]">
           <div className="flex justify-center items-center text-white text-sm">
             <p>Customer</p>

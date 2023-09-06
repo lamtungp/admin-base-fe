@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={firaSans.className}>{children}</body>
+      <body className={`sm:invisible lg:visible ${firaSans.className}`}>{children}</body>
     </html>
   );
 }

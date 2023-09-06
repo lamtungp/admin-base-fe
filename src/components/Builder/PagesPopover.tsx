@@ -7,7 +7,7 @@ const PagesPopover = ({ open }: PagesPopoverProps) => {
     <div
       className={`absolute top-[-48px] ${
         open ? 'opacity-100' : 'invisible opacity-0'
-      } left-[52px] z-1000 inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 shadow-sm w-80`}
+      } z-30 left-[52px] z-1000 inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 shadow-sm w-80`}
     >
       <div className="p-3">
         <div className="flex">
