@@ -27,7 +27,7 @@ const BuilderSidebar = () => {
       <>
         <aside
           id="default-sidebar"
-          className="fixed z-40 h-screen transition-transform -translate-x-full sm:translate-x-0 top-[48px]"
+          className="fixed z-40 h-screen transition-transform -translate-x-full sm:translate-x-0 top-[56px]"
           aria-label="Sidebar"
         >
           <div className="h-full py-4 overflow-y-auto bg-gray-800">

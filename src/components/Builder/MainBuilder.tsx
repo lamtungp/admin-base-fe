@@ -4,13 +4,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import _ from 'lodash';
 import Tooltip from '../Basic/Tooltip';
-import { CogIcon, DocumentDuplicateIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, CogIcon, DocumentDuplicateIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { handleTrimClassName } from '@src/utils';
+import { useAppSelector } from '@src/redux/hooks';
+import { PlaceholderPropsType } from '@src/redux/builder/builder.slice';
 
-const Droppable = dynamic(() => import('react-beautiful-dnd').then((mod) => mod.Droppable), {
+const Droppable = dynamic(() => import('@hello-pangea/dnd').then((mod) => mod.Droppable), {
   ssr: false,
 });
 
-const Draggable = dynamic(() => import('react-beautiful-dnd').then((mod) => mod.Draggable), {
+const Draggable = dynamic(() => import('@hello-pangea/dnd').then((mod) => mod.Draggable), {
   ssr: false,
 });
 
@@ -23,20 +26,17 @@ type Component = {
 
 interface MainBuilderProps {
   components: Component[];
-  placeholderProps: any;
+  placeholderProps?: any;
   setComponents: any;
   onDelete: any;
   onDuplicate: any;
 }
 
-const MainBuilder = ({
-  components,
-  setComponents,
-  placeholderProps,
-  onDelete,
-  onDuplicate,
-}: MainBuilderProps) => {
+const MainBuilder = ({ components, setComponents, onDelete, onDuplicate }: MainBuilderProps) => {
   const ref = useRef(null);
+  const placeholderProps = useAppSelector((root) => root.builder.placeholderProps);
+
+  const [placeholderDrop, setPlaceholderDrop] = useState<PlaceholderPropsType>({});
   const [dragComponentId, setDragComponentId] = useState<string | null>(null);
   const [componentMouseOverId, setComponentMouseOverId] = useState<string | null>(null);
   const [isDraggableDisable, setIsDraggableDisable] = useState(false);
@@ -62,6 +62,10 @@ const MainBuilder = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [ref]);
+
+  useEffect(() => {
+    setPlaceholderDrop(placeholderProps);
+  }, [placeholderProps]);
 
   return (
     <>
@@ -97,13 +101,13 @@ const MainBuilder = ({
                             : item.id === dragComponentId || item.id === componentMouseOverId
                             ? 'visible'
                             : 'invisible'
-                        } group-hover/edit:visible absolute top-[-34px] pb-1`}
+                        } group-hover/edit:visible absolute top-[-32px] pb-1`}
                       >
                         <div
                           className={`rounded-md bg-blue-400 flex justify-center align-middle px-2 gap-2`}
                         >
-                          <div className="border-r border-gray-300 cursor-all-scroll flex justify-center items-center text-white py-[3px]">
-                            <img src="/images/drag-dots.svg" className="w-6" />
+                          <div className="border-r border-gray-300 cursor-all-scroll flex justify-center items-center text-white py-[4px]">
+                            <Bars3Icon className="w-4 mr-1" />
                             <span className="text-[14px] capitalize mr-2 flex justify-center align-middle">
                               {item.name}
                             </span>
@@ -139,11 +143,13 @@ const MainBuilder = ({
                         onMouseEnter={() => setComponentMouseOverId(item.id)}
                       >
                         <div
-                          className={`${
-                            item.id !== dragComponentId && item.id === componentMouseOverId
-                              ? 'cursor-pointer [&>section]:hover:bg-sky-50 [&>section]:hover:opacity-85 [&>section>nav>ul>li]:pointer-events-none [&>section>nav>ul>ul>li]:pointer-events-none [&>section>div>table>tbody>tr:nth-child(odd)]:!bg-blue-50'
-                              : ''
-                          } [&>section]:rounded-md`}
+                          className={handleTrimClassName(
+                            `${
+                              item.id !== dragComponentId && item.id === componentMouseOverId
+                                ? 'cursor-pointer [&>section]:hover:bg-sky-50 [&>section]:hover:opacity-85 [&>section>nav>ul>li]:pointer-events-none [&>section>nav>ul>ul>li]:pointer-events-none [&>section>div>table>tbody>tr:nth-child(odd)]:!bg-blue-50'
+                                : ''
+                            } [&>section]:rounded-md`,
+                          )}
                         >
                           {item.content}
                         </div>
@@ -165,23 +171,23 @@ const MainBuilder = ({
               </Draggable>
             ))}
             <div
-              className="rounded-md"
+              className="rounded-md w-full"
               style={{
                 display: snapshotDrop.draggingFromThisWith?.includes('drag-component')
                   ? 'none'
-                  : 'initial',
+                  : 'block',
               }}
             >
               {providedDrop.placeholder}
             </div>
 
-            {!_.isEmpty(placeholderProps) && snapshotDrop.isDraggingOver && (
+            {!_.isEmpty(placeholderDrop) && snapshotDrop.isDraggingOver && (
               <div
                 className="bg-white p-2 border border-dashed border-blue-400 absolute"
                 style={{
-                  top: placeholderProps.clientY,
-                  left: placeholderProps.clientX,
-                  height: placeholderProps.clientHeight,
+                  top: placeholderDrop.clientY,
+                  left: placeholderDrop.clientX,
+                  height: placeholderDrop.clientHeight,
                   borderRadius: '8px',
                   width: '100%',
                 }}

@@ -1,14 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import _ from 'lodash';
 import { v4 as uuid } from 'uuid';
+import { DragDropContext, DragStart, DragUpdate, DropResult } from '@hello-pangea/dnd';
+
 import SearchInput from '@src/components/Form/SearchInput';
 import BuilderItems from '@src/components/Builder/BuilderItems';
 import MainBuilder from '@src/components/Builder/MainBuilder';
-import { DragDropContext, DragStart, DragUpdate, DropResult } from 'react-beautiful-dnd';
-import IconComponent from '@src/components/Builder/IconComponent';
-import TableItem from '@src/components/Builder/items/TableItem';
+import { generateListItems } from '@src/components/Builder/items/listItems';
+import { useAppDispatch } from '@src/redux/hooks';
+import { setPlaceholderProps } from '@src/redux/builder/builder.slice';
 
 const tableData = {
   columns: ['username', 'email', 'phone', 'day of birth', 'state'],
@@ -18,52 +20,19 @@ const tableData = {
       email: 'Pham Tung Lam',
       phone: 'Pham Tung Lam',
       'day of birth': 'Pham Tung Lam',
-      state: '',
+      state: 'Pham Tung Lam',
     },
     {
       username: 'Pham Tung Lam',
       email: 'Pham Tung Lam',
       phone: 'Pham Tung Lam',
       'day of birth': 'Pham Tung Lam',
-      state: '',
+      state: 'Pham Tung Lam',
     },
   ],
   pageSize: 1,
   totalRows: 5,
 };
-
-const ITEMS = [
-  {
-    id: uuid(),
-    icon: <IconComponent title="Table" icon="/images/table.svg" />,
-    content: <TableItem {...tableData} title="Users" />,
-    name: 'table',
-  },
-  {
-    id: uuid(),
-    icon: <IconComponent title="Form" icon="/images/form.svg" />,
-    content: <TableItem />,
-    name: 'table',
-  },
-  {
-    id: uuid(),
-    icon: <IconComponent title="Container" icon="/images/container.svg" />,
-    content: <TableItem />,
-    name: 'table',
-  },
-  {
-    id: uuid(),
-    icon: <IconComponent title="Table" icon="/images/Grid.svg" />,
-    content: <TableItem />,
-    name: 'table',
-  },
-  {
-    id: uuid(),
-    icon: <IconComponent title="Table" icon="/images/Grid.svg" />,
-    content: <TableItem />,
-    name: 'table',
-  },
-];
 
 type Component = {
   id: string;
@@ -73,9 +42,14 @@ type Component = {
 };
 
 export default function BuilderPage() {
+  const dispatch = useAppDispatch();
+
   const [components, setComponents] = useState<Component[]>([]);
   const [textSearch, setTextSearch] = useState('');
-  const [placeholderProps, setPlaceholderProps] = useState({});
+
+  const listItems = generateListItems({ tableData });
+  const orderItems = [] as any;
+  listItems.map((list) => orderItems.push(...list.items));
 
   const onChange = _.debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     setTextSearch(e.target.value);
@@ -121,14 +95,14 @@ export default function BuilderPage() {
     return result;
   };
 
-  const getDndDom = (dndId: string, attribute = 'data-rbd-drag-handle-draggable-id') => {
+  const getDndDom = (dndId: string, attribute = 'data-rfd-drag-handle-draggable-id') => {
     const domQuery = `[${attribute}='${dndId}']`;
     const draggedDOM = document.querySelector(domQuery);
     return draggedDOM;
   };
 
   const onDragEnd = (result: DropResult) => {
-    setPlaceholderProps({});
+    dispatch(setPlaceholderProps({}));
     const { source, destination } = result;
 
     // dropped outside the list
@@ -139,7 +113,7 @@ export default function BuilderPage() {
     if (source.droppableId === destination.droppableId) {
       setComponents(reorder(components, source.index, destination.index));
     } else if (source.droppableId.includes('component')) {
-      setComponents(copy(ITEMS, components, source, destination));
+      setComponents(copy(orderItems, components, source, destination));
     }
   };
 
@@ -150,7 +124,7 @@ export default function BuilderPage() {
 
     const isDragComponent = event.draggableId.includes('drag-component');
     const draggedDOM = isDragComponent
-      ? getDndDom(event.destination.droppableId, 'data-rbd-droppable-id')
+      ? getDndDom(event.destination.droppableId, 'data-rfd-droppable-id')
       : getDndDom(event.draggableId);
     if (!draggedDOM || !draggedDOM.parentNode) {
       return;
@@ -189,12 +163,14 @@ export default function BuilderPage() {
         return total + curr.clientHeight + marginBottom;
       }, 0);
 
-    setPlaceholderProps({
+    const newPlaceholderProps = {
       clientHeight,
       clientWidth,
       clientY,
       clientX: parseFloat(window.getComputedStyle(parentNode as Element).paddingLeft),
-    });
+    };
+
+    dispatch(setPlaceholderProps(newPlaceholderProps));
   };
 
   const onDragStart = (event: DragStart) => {
@@ -214,12 +190,14 @@ export default function BuilderPage() {
         return total + curr.clientHeight + marginBottom;
       }, 0);
 
-    setPlaceholderProps({
+    const newPlaceholderProps = {
       clientHeight,
       clientWidth,
       clientY,
       clientX: parseFloat(window.getComputedStyle(parentNode as Element).paddingLeft),
-    });
+    };
+
+    dispatch(setPlaceholderProps(newPlaceholderProps));
   };
 
   return (
@@ -231,7 +209,6 @@ export default function BuilderPage() {
             setComponents={setComponents}
             onDelete={handleDelete}
             onDuplicate={handleDuplicate}
-            placeholderProps={placeholderProps}
           />
         </div>
         <div className="w-[340px] min-h-full bg-gray-100 px-3 py-4">
@@ -241,7 +218,7 @@ export default function BuilderPage() {
               value={textSearch}
               placeholder="Search components..."
             />
-            <BuilderItems />
+            <BuilderItems listItems={listItems} />
           </div>
         </div>
       </div>

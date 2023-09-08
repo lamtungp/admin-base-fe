@@ -1,3 +1,4 @@
+import { handleTrimClassName } from '@src/utils';
 import './index.scss';
 
 interface TooltipProps
@@ -7,7 +8,14 @@ interface TooltipProps
   position?: string;
 }
 
-const Tooltip = ({ children, title, position = '', className, onClick }: TooltipProps) => {
+const Tooltip = ({
+  children,
+  title,
+  position = '',
+  className,
+  onClick,
+  ...props
+}: TooltipProps) => {
   const getPositionStyles = (position?: string) => {
     switch (position) {
       case 'bottom':
@@ -19,7 +27,7 @@ const Tooltip = ({ children, title, position = '', className, onClick }: Tooltip
   };
 
   return (
-    <div className={`tooltip ${className}`} onClick={onClick}>
+    <div {...props} className={handleTrimClassName(`tooltip ${className}`)} onClick={onClick}>
       {children}
       <div className={`${getPositionStyles(position)} tooltip-text`}>{title}</div>
     </div>

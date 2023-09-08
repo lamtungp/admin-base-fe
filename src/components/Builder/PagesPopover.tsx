@@ -5,21 +5,12 @@ interface PagesPopoverProps {
 const PagesPopover = ({ open }: PagesPopoverProps) => {
   return (
     <div
-      className={`absolute top-[-48px] ${
+      className={`absolute top-[-56px] h-full ${
         open ? 'opacity-100' : 'invisible opacity-0'
-      } z-30 left-[52px] z-1000 inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 shadow-sm w-80`}
+      } z-30 left-[52px] z-1000 inline-block text-sm text-gray-500 transition-opacity duration-300 bg-gray-700 shadow-sm w-80`}
     >
       <div className="p-3">
         <div className="flex">
-          <div className="mr-3 shrink-0">
-            <a href="#" className="block p-2 bg-gray-100 rounded-lg dark:bg-gray-700">
-              <img
-                className="w-8 h-8 rounded-full"
-                src="https://flowbite.com/docs/images/logo.svg"
-                alt="Flowbite logo"
-              />
-            </a>
-          </div>
           <div>
             <p className="mb-1 text-base font-semibold leading-none text-gray-900 dark:text-white">
               <a href="#" className="hover:underline">
@@ -54,105 +45,6 @@ const PagesPopover = ({ open }: PagesPopoverProps) => {
                 </span>
               </li>
             </ul>
-            {/* <div className="flex mb-3 -space-x-3">
-              <img
-                className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-                src="/docs/images/people/profile-picture-5.jpg"
-                alt=""
-              />
-              <img
-                className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-                src="/docs/images/people/profile-picture-2.jpg"
-                alt=""
-              />
-              <img
-                className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-                src="/docs/images/people/profile-picture-3.jpg"
-                alt=""
-              />
-              <a
-                className="flex items-center justify-center w-8 h-8 text-xs font-medium text-white bg-gray-400 border-2 border-white rounded-full hover:bg-gray-500 dark:border-gray-800"
-                href="#"
-              >
-                +3
-              </a>
-            </div> */}
-            <div className="flex">
-              <button
-                type="button"
-                className="inline-flex items-center justify-center w-full px-5 py-2 mr-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-              >
-                <svg
-                  className="w-3.5 h-3.5 mr-2.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 18 18"
-                >
-                  <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z" />
-                </svg>
-                Like page
-              </button>
-              <button
-                id="dropdown-button"
-                data-dropdown-toggle="dropdown-menu"
-                data-dropdown-placement="right"
-                className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shrink-0 focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                type="button"
-              >
-                <svg
-                  className="w-3.5 h-3.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 16 3"
-                >
-                  <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                </svg>
-              </button>
-            </div>
-            <div
-              id="dropdown-menu"
-              className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-            >
-              <ul
-                className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                aria-labelledby="dropdown-button"
-              >
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Report this page
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Add to favorites
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Block this page
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Invite users
-                  </a>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>

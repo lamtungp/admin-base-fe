@@ -6,35 +6,6 @@ import FormIcon from '@src/components/Icons/FormIcon';
 import ContainerIcon from '@src/components/Icons/ContainerIcon';
 import ColumnIcon from '@src/components/Icons/ColumnIcon';
 
-const tableData = {
-  columns: ['username', 'email', 'phone', 'day of birth', 'state'],
-  rows: [
-    {
-      username: 'Pham Tung Lam',
-      email: 'Pham Tung Lam',
-      phone: 'Pham Tung Lam',
-      'day of birth': 'Pham Tung Lam',
-      state: 'Pham Tung Lam',
-    },
-    {
-      username: 'Pham Tung Lam',
-      email: 'Pham Tung Lam',
-    },
-    {
-      username: 'Pham Tung Lam',
-      a: 'Pham Tung Lam',
-    },
-    {
-      username: 'Pham Tung Lam',
-    },
-    {
-      username: 'Pham Tung Lam',
-    },
-  ],
-  pageSize: 1,
-  totalRows: 5,
-};
-
 type ItemData = {
   tableData?: any;
 };

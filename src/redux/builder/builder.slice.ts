@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type PlaceholderPropsType = {
+export type PlaceholderPropsType = {
   clientHeight?: number;
   clientWidth?: number;
   clientY?: number;

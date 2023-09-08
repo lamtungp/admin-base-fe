@@ -1,27 +1,31 @@
 import React, { CSSProperties } from 'react';
 import dynamic from 'next/dynamic';
-import { listItems } from './items/listItems';
+import { handleTrimClassName } from '@src/utils';
 
-const Droppable = dynamic(() => import('react-beautiful-dnd').then((mod) => mod.Droppable), {
+const Droppable = dynamic(() => import('@hello-pangea/dnd').then((mod) => mod.Droppable), {
   ssr: false,
 });
 
-const Draggable = dynamic(() => import('react-beautiful-dnd').then((mod) => mod.Draggable), {
+const Draggable = dynamic(() => import('@hello-pangea/dnd').then((mod) => mod.Draggable), {
   ssr: false,
 });
 
-const BuilderItems = () => {
+interface BuilderItemsProps {
+  listItems: any[];
+}
+
+const BuilderItems = ({ listItems }: BuilderItemsProps) => {
   const transitionStyles: CSSProperties = {
     transition: `all 0.25s ease`,
   };
 
   return (
     <>
-      {listItems.map((list, index) => (
+      {listItems.map((list: any, index: number) => (
         <div key={index}>
           <h4 className="my-2">{list.category}</h4>
           <div className="grid grid-cols-3 gap-2">
-            {list.items.map((item, index) => (
+            {list.items.map((item: any, index: number) => (
               <Droppable
                 droppableId={`drop-component-${item.id}`}
                 key={`drop-component-${item.id}`}
@@ -38,9 +42,11 @@ const BuilderItems = () => {
                         <React.Fragment>
                           <div
                             key={item.id}
-                            className={`p-1 border-2 border-transparent bg-white rounded-md hover:border-2 hover:border-blue-400 hover:pointer-events-auto ${
-                              snapshot.isDragging ? 'border-2 border-blue-400' : ''
-                            }`}
+                            className={handleTrimClassName(
+                              `p-1 border-2 border-transparent bg-white rounded-md hover:border-2 hover:border-blue-400 hover:pointer-events-auto ${
+                                snapshot.isDragging ? '!border-blue-400' : ''
+                              }`,
+                            )}
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
@@ -53,7 +59,7 @@ const BuilderItems = () => {
                             {item.icon}
                           </div>
                           {snapshot.isDragging && (
-                            <div className="p-1 border-2 border-transparent bg-white rounded-md hover:border-2 hover:border-blue-400 hover:pointer-events-auto clone">
+                            <div className="p-1 border-2 border-transparent bg-white rounded-md hover:border-2 hover:border-blue-400 hover:pointer-events-auto">
                               {item.icon}
                             </div>
                           )}
