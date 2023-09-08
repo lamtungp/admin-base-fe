@@ -1,6 +1,10 @@
 import { v4 as uuid } from 'uuid';
-import IconComponent from '../IconComponent';
+import IconComponent from './IconComponent';
 import TableItem from './TableItem';
+import TableIcon from '@src/components/Icons/TableIcon';
+import FormIcon from '@src/components/Icons/FormIcon';
+import ContainerIcon from '@src/components/Icons/ContainerIcon';
+import ColumnIcon from '@src/components/Icons/ColumnIcon';
 
 const tableData = {
   columns: ['username', 'email', 'phone', 'day of birth', 'state'],
@@ -31,19 +35,25 @@ const tableData = {
   totalRows: 5,
 };
 
-export const listItems = [
+type ItemData = {
+  tableData?: any;
+};
+
+export const generateListItems = ({ tableData = { title: 'Users' } }: ItemData) => [
   {
     category: 'Most Used',
     items: [
       {
         id: uuid(),
-        icon: <IconComponent title="Table" icon="/images/table.svg" />,
-        content: <TableItem {...tableData} title="Users" />,
+        icon: <IconComponent title="Table" icon={<TableIcon className="w-9 text-sky-500" />} />,
+        content: <TableItem {...tableData} />,
+        name: 'table',
       },
       {
         id: uuid(),
-        icon: <IconComponent title="Form" icon="/images/form.svg" />,
-        content: <TableItem />,
+        icon: <IconComponent title="Form" icon={<FormIcon className="w-9 text-sky-500" />} />,
+        content: <TableItem {...tableData} />,
+        name: 'table',
       },
     ],
   },
@@ -52,13 +62,17 @@ export const listItems = [
     items: [
       {
         id: uuid(),
-        icon: <IconComponent title="Container" icon="/images/container.svg" />,
-        content: <TableItem />,
+        icon: (
+          <IconComponent title="Container" icon={<ContainerIcon className="w-9 text-sky-500" />} />
+        ),
+        content: <TableItem {...tableData} />,
+        name: 'table',
       },
       {
         id: uuid(),
-        icon: <IconComponent title="Columns" icon="/images/columns.svg" />,
-        content: <TableItem />,
+        icon: <IconComponent title="Columns" icon={<ColumnIcon className="w-9 text-sky-500" />} />,
+        content: <TableItem {...tableData} />,
+        name: 'table',
       },
     ],
   },
