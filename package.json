@@ -9,15 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^16.3.0",
     "@heroicons/react": "^2.0.18",
+    "@reduxjs/toolkit": "^1.9.5",
     "autoprefixer": "10.4.15",
     "lodash": "^4.17.21",
     "next": "13.4.19",
     "nextjs-toploader": "^1.4.2",
     "postcss": "8.4.28",
     "react": "18.2.0",
-    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "18.2.0",
+    "react-redux": "^8.1.2",
     "sass": "^1.66.1",
     "tailwindcss": "3.3.3",
     "uuid": "^9.0.0"
@@ -26,7 +28,6 @@
     "@types/lodash": "^4.14.197",
     "@types/node": "20.5.2",
     "@types/react": "^18.2.20",
-    "@types/react-beautiful-dnd": "^13.1.4",
     "@types/react-dom": "^18.2.7",
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
